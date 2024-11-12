@@ -1,0 +1,51 @@
+---
+import { Picture } from "astro:assets";
+import Layout from "@layouts/Layout.astro";
+import Container from "@components/container.astro";
+import Sectionhead from "@components/sectionhead.astro";
+---
+
+<Layout title="About">
+  <Container>
+    <Sectionhead>
+      <Fragment slot="title">About jpc.finance</Fragment>
+      <Fragment slot="desc"
+        >Building tools to help you achieve financial freedom</Fragment
+      >
+    </Sectionhead>
+
+    <div class="flex flex-col gap-8 mx-auto mt-16 max-w-4xl">
+      <div class="text-lg leading-relaxed text-gray-600">
+        <p class="mb-6">
+          jpc.finance was created with a simple mission: to empower individuals
+          with the tools and insights they need to take control of their
+          financial future. We believe that financial freedom should be
+          accessible to everyone, not just those who can afford expensive
+          advisors or complex software.
+        </p>
+        <p class="mb-6">
+          Our platform provides intuitive, powerful tools for budgeting,
+          investment tracking, and financial planning - all designed to help you
+          make informed decisions about your money.
+        </p>
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-8 mx-auto mt-16 max-w-4xl">
+      <h2 class="text-2xl text-gray-800 font-bold">Meet the Creator</h2>
+      <div class="flex flex-col items-center gap-4">
+        <Picture
+          src="https://github.com/johnpc.png"
+          alt="John Corser"
+          width={200}
+          height={200}
+          class="rounded-full"
+        />
+        <div class="text-center">
+          <h3 class="text-xl text-gray-800 font-medium">John Corser</h3>
+          <p class="text-gray-600">Founder & Developer</p>
+        </div>
+      </div>
+    </div>
+  </Container>
+</Layout>

@@ -1,0 +1,69 @@
+---
+// @ts-ignore
+import { Icon } from "astro-icon/components";
+
+const features = [
+  {
+    title: "Digital Envelopes",
+    description:
+      "Create custom budget categories and allocate every dollar with our modern take on the traditional envelope system.",
+    icon: "bx:bxs-wallet",
+  },
+  {
+    title: "Zero-Based Budgeting",
+    description:
+      "Give every dollar a purpose. Our intuitive system ensures your income minus your allocations always equals zero.",
+    icon: "bx:bxs-calculator",
+  },
+  {
+    title: "Real-Time Tracking",
+    description:
+      "Monitor your spending as it happens. Get instant updates on your envelope balances and budget status.",
+    icon: "bx:bxs-chart",
+  },
+  {
+    title: "Shared Budgets",
+    description:
+      "Perfect for couples and families. Share envelopes, track household spending, and work together toward financial goals.",
+    icon: "bx:bxs-group",
+  },
+  {
+    title: "Smart Reports",
+    description:
+      "Gain insights with detailed spending analysis, trends, and progress reports. Export your data anytime.",
+    icon: "bx:bxs-report",
+  },
+  {
+    title: "Bank Sync",
+    description:
+      "Securely connect your bank accounts for automatic transaction imports and real-time balance updates.",
+    icon: "bx:bxs-bank",
+  },
+];
+---
+
+<div class="mt-16 md:mt-0">
+  <h2 class="text-4xl lg:text-5xl font-bold lg:tracking-tight">
+    Smart budgeting for real life
+  </h2>
+  <p class="text-lg mt-4 text-slate-600">
+    Take control of your finances with our powerful yet simple envelope
+    budgeting system. Everything you need to succeed with your money.
+  </p>
+</div>
+
+<div class="grid sm:grid-cols-2 md:grid-cols-3 mt-16 gap-16">
+  {
+    features.map((item) => (
+      <div class="flex gap-4 items-start">
+        <div class="mt-1 bg-black rounded-full p-2 w-8 h-8 shrink-0">
+          <Icon class="text-white" name={item.icon} />
+        </div>
+        <div>
+          <h3 class="font-semibold text-lg">{item.title}</h3>{" "}
+          <p class="text-slate-500 mt-2 leading-relaxed">{item.description}</p>
+        </div>
+      </div>
+    ))
+  }
+</div>

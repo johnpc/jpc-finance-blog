@@ -1,0 +1,8 @@
+.prettierignore
+.gitignore
+.npmrc
+.husky
+*.svg
+*.jpg
+*.png
+*.prettierignore
