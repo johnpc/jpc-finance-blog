@@ -1,0 +1,110 @@
+---
+import { getCollection } from "astro:content";
+import { Picture } from "astro:assets";
+import Layout from "@layouts/Layout.astro";
+import Container from "@components/container.astro";
+import Sectionhead from "@components/sectionhead.astro";
+import Pagination from "@components/pagination.astro";
+
+export async function getStaticPaths() {
+  const POSTS_PER_PAGE = 6;
+  const posts = await getCollection("blog");
+
+  console.log("Total posts found:", posts.length);
+
+  const publishedPosts = posts.filter((post) => {
+    return !post.data.draft && new Date(post.data.publishDate) <= new Date();
+  });
+
+  console.log("Published posts:", publishedPosts.length);
+
+  const sortedPosts = publishedPosts.sort(
+    (a, b) =>
+      new Date(b.data.publishDate).valueOf() -
+      new Date(a.data.publishDate).valueOf(),
+  );
+
+  const totalPages = Math.ceil(sortedPosts.length / POSTS_PER_PAGE);
+
+  return Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
+    const start = (page - 1) * POSTS_PER_PAGE;
+    const end = start + POSTS_PER_PAGE;
+    const paginatedPosts = sortedPosts.slice(start, end);
+
+    return {
+      params: { page: page.toString() },
+      props: {
+        page: {
+          data: paginatedPosts,
+          currentPage: page,
+          lastPage: totalPages,
+          url: {
+            prev: page > 1 ? `/blog/${page - 1}` : undefined,
+            next: page < totalPages ? `/blog/${page + 1}` : undefined,
+          },
+        },
+      },
+    };
+  });
+}
+
+const { page } = Astro.props;
+---
+
+<Layout title="Blog | jpc.finance">
+  <Container>
+    <Sectionhead>
+      <Fragment slot="title">Blog</Fragment>
+      <Fragment slot="desc">Financial tips and insights</Fragment>
+    </Sectionhead>
+
+    <main class="mt-16">
+      <ul class="grid gap-16 max-w-6xl mx-auto">
+        {
+          page.data.map((post) => (
+            <li>
+              <a href={`/posts/${post.slug}`}>
+                <div class="grid md:grid-cols-2 gap-5 md:gap-10 items-center">
+                  <Picture
+                    src={post.data.image.src}
+                    alt={post.data.image.alt}
+                    sizes="(max-width: 800px) 100vw, 800px"
+                    width={800}
+                    height={600}
+                    loading="eager"
+                    decoding="sync"
+                    class="w-full rounded-md object-cover object-center bg-white"
+                  />
+                  <div>
+                    <span class="text-blue-400 uppercase tracking-wider text-sm font-medium">
+                      {post.data.category}
+                    </span>
+
+                    <h2 class="text-3xl font-semibold leading-snug tracking-tight mt-1">
+                      {post.data.title}
+                    </h2>
+
+                    <div class="flex gap-2 mt-3">
+                      <span class="text-gray-400">{post.data.author}</span>
+                      <span class="text-gray-400">•</span>
+                      <time
+                        class="text-gray-400"
+                        datetime={post.data.publishDate}
+                      >
+                        {new Date(post.data.publishDate).toDateString()}
+                      </time>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="mt-16">
+        <Pagination page={page} />
+      </div>
+    </main>
+  </Container>
+</Layout>

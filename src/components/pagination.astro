@@ -1,0 +1,29 @@
+---
+const { page } = Astro.props;
+---
+
+<div class="mt-16 flex justify-center gap-4">
+  {
+    page.url.prev && (
+      <a
+        href={page.url.prev}
+        class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-md"
+      >
+        ← Previous
+      </a>
+    )
+  }
+  <span class="px-4 py-2">
+    Page {page.currentPage} of {page.lastPage}
+  </span>
+  {
+    page.url.next && (
+      <a
+        href={page.url.next}
+        class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-md"
+      >
+        Next →
+      </a>
+    )
+  }
+</div>
